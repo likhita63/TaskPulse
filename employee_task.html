@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ branch|capitalize }} Tasks</title>
+</head>
+<body>
+<h2>{{ branch|capitalize }} Tasks</h2>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Assigned To</th>
+        <th>Type</th>
+        <th>Duration</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task[0] }}</td>
+        <td>{{ task[1] }}</td>
+        <td>{{ task[2] }}</td>
+        <td>{{ task[3] }}</td>
+        <td>{{ task[4] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

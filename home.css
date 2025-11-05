@@ -1,0 +1,174 @@
+/* === Base === */
+body {
+  background: #FAF5FF;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1E1B4B;
+}
+
+/* === Navbar === */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(124, 58, 237, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 14px 32px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+/* Left Side (Brand) */
+.nav-left {
+  flex: 1;
+}
+
+.brand {
+  color: #7C3AED;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Center Links */
+.nav-center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.nav-link {
+  color: #1E1B4B;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s, transform 0.2s;
+  font-size: 16px;
+}
+
+.nav-link:hover {
+  color: #0D9488;
+  transform: translateY(-2px);
+}
+
+/* Right Side (Logout) */
+.nav-right {
+  flex: 1;
+  display: flex;
+  justify-content:space-evenly;
+}
+
+.logout-btn {
+  background: linear-gradient(90deg, #7C3AED, #0D9488);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(90deg, #0D9488, #7C3AED);
+  transform: scale(1.05);
+}
+.create-group-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 10px;
+  transition: 0.2s;
+}
+.create-group-btn:hover {
+  background: #388E3C;
+}
+
+
+/* === Dashboard Container === */
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 120px;
+  padding: 40px;
+}
+
+/* Welcome Card */
+.welcome-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 50px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  width: 600px;
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+.welcome-card h2 {
+  color: #7C3AED;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.welcome-card p {
+  color: #1E1B4B;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* Flash Messages */
+.flash {
+  margin-top: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #FAF5FF;
+  color: #1E1B4B;
+  border-left: 4px solid #F59E0B;
+}
+
+/* === Animation === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 14px 20px;
+  }
+
+  .nav-center {
+    margin-top: 8px;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-right {
+    margin-top: 10px;
+    justify-content: center;
+  }
+
+  .logout-btn {
+    width: 100%;
+    max-width: 140px;
+  }
+
+  .welcome-card {
+    width: 90%;
+    padding: 30px 20px;
+  }
+}

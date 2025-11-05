@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+
+{% block title %}Kanban Board | NotifyNet{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    text-align: center;
+    color: #6C63FF;
+    margin-top: 120px;
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .board {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 40px auto;
+    width: 90%;
+  }
+
+  .column {
+    background: #ffffff;
+    border: 1px solid #E4E4E7;
+    border-radius: 16px;
+    padding: 18px;
+    width: 320px;
+    min-height: 430px;
+    box-shadow: 0 8px 18px rgba(108, 99, 255, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .column:hover {
+    box-shadow: 0 10px 22px rgba(108, 99, 255, 0.25);
+    transform: translateY(-4px);
+  }
+
+  .column h3 {
+    text-align: center;
+    color: #5B21B6;
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  /* Column highlight on drag */
+  .column.highlight {
+    border: 2px dashed #6C63FF;
+    background: rgba(108, 99, 255, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .task-card {
+    background: #f9f9ff;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    cursor: grab;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .task-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 14px rgba(108, 99, 255, 0.2);
+  }
+
+  .task-card.dragging {
+    opacity: 0.6;
+    transform: scale(1.05);
+    border: 2px dashed #7C3AED;
+    background-color: #f3f0ff;
+  }
+
+  .task-card h3 {
+    color: #1E293B;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 17px;
+  }
+
+  .task-card p {
+    color: #475569;
+    font-size: 14px;
+    margin: 3px 0;
+  }
+
+  .task-card button {
+    background-color: #6C63FF;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .task-card button:hover {
+    background-color: #5B55E5;
+  }
+
+  .task-card .delete-btn {
+    background-color: #EF4444 !important;
+    font-weight: bold;
+  }
+
+  .task-card .delete-btn:hover {
+    background-color: #DC2626 !important;
+  }
+
+  .back-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 40px auto;
+    background: linear-gradient(90deg, #6C63FF, #A78BFA);
+    color: #fff;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(108, 99, 255, 0.25);
+  }
+
+  .back-btn:hover {
+    background: linear-gradient(90deg, #5B55E5, #8B5CF6);
+    box-shadow: 0 6px 16px rgba(108, 99, 255, 0.35);
+  }
+
+  .back-container {
+    text-align: center;
+    margin-top: 40px;
+  }
+</style>
+
+<h1>📋 Kanban Board</h1>
+
+<div class="board">
+  <!-- To Do -->
+  <div class="column" data-status="todo">
+    <h3>📝 To Do</h3>
+    {% for task in tasks if task[5] == 'todo' %}
+    <div class="task-card" data-id="{{ task[0] }}" draggable="true">
+      <h3>{{ task[1] }}</h3>
+      <p><strong>Assigned To:</strong> {{ task[2] }}</p>
+      <p><strong>Task Type:</strong> {{ task[3] }}</p>
+      <p><strong>Duration:</strong> {{ task[4] }}</p>
+      <div>
+        <button onclick="editTask('{{ task[0] }}')">✏️ Edit</button>
+        <a href="{{ url_for('delete_task', task_id=task[0]) }}">
+          <button class="delete-btn">🗑 Delete</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- In Progress -->
+  <div class="column" data-status="inprogress">
+    <h3>🚧 In Progress</h3>
+    {% for task in tasks if task[5] == 'inprogress' %}
+    <div class="task-card" data-id="{{ task[0] }}" draggable="true">
+      <h3>{{ task[1] }}</h3>
+      <p><strong>Assigned To:</strong> {{ task[2] }}</p>
+      <p><strong>Task Type:</strong> {{ task[3] }}</p>
+      <p><strong>Duration:</strong> {{ task[4] }}</p>
+      <div>
+        <button onclick="editTask('{{ task[0] }}')">✏️ Edit</button>
+        <a href="{{ url_for('delete_task', task_id=task[0]) }}">
+          <button class="delete-btn">🗑 Delete</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Done -->
+  <div class="column" data-status="Completed">
+    <h3>✅ Done</h3>
+    {% for task in tasks if task[5] == 'done' %}
+    <div class="task-card" data-id="{{ task[0] }}" draggable="true">
+      <h3>{{ task[1] }}</h3>
+      <p><strong>Assigned To:</strong> {{ task[2] }}</p>
+      <p><strong>Task Type:</strong> {{ task[3] }}</p>
+      <p><strong>Duration:</strong> {{ task[4] }}</p>
+      <div>
+        <button onclick="editTask('{{ task[0] }}')">✏️ Edit</button>
+        <a href="{{ url_for('delete_task', task_id=task[0]) }}">
+          <button class="delete-btn">🗑 Delete</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="back-container">
+  <a href="{{ url_for('project_head') }}" class="back-btn">⬅ Back to Project Head</a>
+</div>
+
+<script>
+  function editTask(taskId) {
+    window.location.href = `/project_head?edit=${taskId}`;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const tasks = document.querySelectorAll(".task-card");
+    const columns = document.querySelectorAll(".column");
+
+    tasks.forEach(task => {
+      task.draggable = true;
+
+      task.addEventListener("dragstart", () => task.classList.add("dragging"));
+      task.addEventListener("dragend", () => {
+        task.classList.remove("dragging");
+        columns.forEach(col => col.classList.remove("highlight"));
+      });
+    });
+
+    columns.forEach(column => {
+      column.addEventListener("dragover", e => {
+        e.preventDefault();
+        column.classList.add("highlight");
+      });
+
+      column.addEventListener("dragleave", () => column.classList.remove("highlight"));
+
+      column.addEventListener("drop", () => {
+        column.classList.remove("highlight");
+        const draggingTask = document.querySelector(".dragging");
+        if (draggingTask) {
+          column.appendChild(draggingTask);
+
+          const taskId = draggingTask.dataset.id;
+          const newStatus = column.dataset.status;
+
+          fetch("/update_task_status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: taskId, status: newStatus }),
+          });
+        }
+      });
+    });
+  });
+</script>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+  const socket = io();
+
+  // Listen for task updates from other users
+  socket.on('task_updated', (data) => {
+    const taskId = data.id;
+    const newStatus = data.status;
+
+    const taskCard = document.querySelector(`.task-card[data-id='${taskId}']`);
+    const targetColumn = document.querySelector(`.column[data-status='${newStatus}']`);
+
+    if (taskCard && targetColumn) {
+      targetColumn.appendChild(taskCard);
+    }
+  });
+</script>
+
+
+{% endblock %}

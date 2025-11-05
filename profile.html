@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile | NotifyNet</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+
+</head>
+<body>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <!-- <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Profile Picture" class="profile-pic"> -->
+      <h2>{{ user.name }}</h2>
+      <p class="bio">{{ user.bio }}</p>
+    </div>
+
+    <div class="info-section">
+      <h3>Personal Information</h3>
+      <div class="info-item"><strong>Email:</strong> {{ user.email }}</div>
+      <div class="info-item"><strong>Branch:</strong> {{ user.branch }}</div>
+    </div>
+
+    <div class="project-section">
+      <h3>Project Details</h3>
+      <div class="info-item"><strong>Project Name:</strong> {{ user.project_name }}</div>
+      <div class="info-item"><strong>Project Status:</strong> {{ user.project_status }}</div>
+      <div class="info-item"><strong>Project Goal:</strong> {{ user.project_goal }}</div>
+      <div class="info-item"><strong>Next Project:</strong> {{ user.next_project }}</div>
+    </div>
+
+    <div class="btn-container">
+      <a href="{{ url_for('update_profile') }}" class="btn edit-btn">✏️ Edit Profile</a>
+      <a href="{{ url_for('home_page') }}" class="btn"> Back to Home</a>
+    </div>
+  </div>
+
+</body>
+</html>

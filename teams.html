@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Teams | NotifyNet{% endblock %}
+
+{% block content %}
+<div class="teams-container">
+  <h2>👥 Project Groups</h2>
+
+  {% if groups %}
+    <div class="group-list">
+      {% for group in groups %}
+      <div class="group-card">
+        <h3>{{ group.group_name }}</h3>
+        <p class="desc">{{ group.description }}</p>
+        <p><b>Members:</b> {{ group.members }}</p>
+        <p class="date">Created on: {{ group.created_at.strftime("%Y-%m-%d") }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No groups created yet.</p>
+  {% endif %}
+</div>
+
+<style>
+.teams-container {
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+.group-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+}
+
+.group-card {
+  background: #f9fff9;
+  border: 1px solid #cdeccc;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+.group-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.group-card h3 {
+  color: #2e7d32;
+  margin-bottom: 5px;
+}
+.desc {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.date {
+  font-size: 12px;
+  color: #999;
+}
+</style>
+
+{% endblock %}

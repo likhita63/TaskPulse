@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Frontend Team | Teamity{% endblock %}
+
+{% block content %}
+<div class="page-container">
+  <h1>💻 Frontend Team Tasks</h1>
+
+  <div class="task-container">
+    {% for task in tasks %}
+    <div class="task-card">
+      <h3>{{ task[1] }}</h3>
+      <p><strong>Assigned To:</strong> {{ task[2] }}</p>
+      <p><strong>Duration:</strong> {{ task[3] }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.page-container {
+  background-color: #ffffff;
+  padding: 60px 20px;
+  min-height: 100vh;
+  text-align: center;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+h1 {
+  color: #1E1B4B;
+  margin-bottom: 40px;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+.btn-back {
+  display: inline-block;
+  background-color: #7C3AED;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s ease;
+  margin-bottom: 40px;
+}
+
+.btn-back:hover {
+  background-color: #0D9488;
+}
+
+.task-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.task-card {
+  background-color: #FAF5FF;
+  border: 2px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 25px;
+  width: 260px;
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+}
+
+.task-card h3 {
+  color: #7C3AED;
+  margin-bottom: 10px;
+}
+
+.task-card p {
+  color: #1E1B4B;
+  font-size: 14px;
+  margin: 8px 0;
+}
+</style>
+{% endblock %}

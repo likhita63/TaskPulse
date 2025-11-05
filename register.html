@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | TaskPulse</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+</head>
+<body>
+  <div class="navbar">
+    <h1 class="logo">TaskPulse</h1>
+  </div>
+
+  <div class="main-container">
+    <!-- Left Image Section -->
+    <div class="image-section">
+      <img src="{{ url_for('static', filename='register.png') }}" alt="Team collaboration">
+      <div class="overlay-text">
+        <h2>Join NotifyNet</h2>
+        <p>Empower teamwork and stay connected.</p>
+      </div>
+    </div>
+
+    <!-- Right Form Section -->
+    <div class="form-container">
+      <h2>Create Your Account</h2>
+      <form method="POST">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Register</button>
+      </form>
+
+      <p>Already registered? <a href="{{ url_for('login') }}">Login here</a></p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endwith %}
+    </div>
+  </div>
+</body>
+</html>

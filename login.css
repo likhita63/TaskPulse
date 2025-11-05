@@ -1,0 +1,237 @@
+/* === Global Layout === */
+body {
+  background: #FAF5FF;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+/* === Navbar === */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(124, 58, 237, 0.12);
+  backdrop-filter: blur(10px);
+  padding: 14px 30px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+}
+
+.logo {
+  color: #1E1B4B;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* === Main Container === */
+.main-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  width: 920px;
+  max-width: 95%;
+  margin-top: 60px;
+  height: 520px;
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+/* === Left Image Section === */
+.image-section {
+  flex: 1.2;
+  position: relative;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(13, 148, 136, 0.82));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.86;
+  mix-blend-mode: multiply;
+}
+
+.overlay-text {
+  position: absolute;
+  color: #FAF5FF;
+  text-align: center;
+  padding: 16px 22px;
+  max-width: 320px;
+}
+
+.overlay-text h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.28);
+}
+
+.overlay-text p {
+  font-size: 14px;
+  color: #E6EEEF;
+  margin: 0;
+}
+
+/* === Right Form Section === */
+.form-container {
+  flex: 1;
+  padding: 48px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background: #fff;
+  /* Constrain inner content so inputs have a predictable max width */
+  box-sizing: border-box;
+}
+
+/* Center content & limit width so inputs don't stretch too wide */
+.form-inner {
+  width: 100%;
+  max-width: 320px;   /* <-- controls input visual width */
+  margin: 0 auto;
+}
+
+/* Title */
+.form-container h2 {
+  margin-bottom: 22px;
+  color: #1E1B4B;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* === Inputs (fixed height & consistent look) === */
+input[type="email"],
+input[type="password"],
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  height: 48px;            /* fixed, consistent height */
+  padding: 0 14px;         /* horizontal padding only to vertically center text */
+  margin: 10px 0;
+  border-radius: 10px;     /* slightly larger radius for modern look */
+  border: 1px solid #e2e6ef;
+  font-size: 15px;
+  line-height: 1;
+  outline: none;
+  transition: border-color 0.24s ease, box-shadow 0.24s ease;
+  box-sizing: border-box;
+}
+
+/* textarea: allow multi-line but keep padding consistent */
+textarea {
+  height: auto;
+  min-height: 96px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+/* Focus state */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #7C3AED;
+  box-shadow: 0 6px 18px rgba(124,58,237,0.12);
+}
+
+/* === Button (matching input width) === */
+button {
+  display: block;
+  width: 100%;
+  height: 48px;            /* same height as inputs for symmetry */
+  margin-top: 12px;
+  background: linear-gradient(90deg, #7C3AED, #0D9488);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13,148,136,0.12);
+}
+
+/* Links */
+a {
+  color: #0D9488;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+a:hover {
+  color: #7C3AED;
+}
+
+/* Flash messages: keep consistent width with form */
+.flash {
+  margin-top: 14px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #FAF5FF;
+  color: #1E1B4B;
+  border-left: 4px solid #F59E0B;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* === Utility: smaller helper spacing for form inner container === */
+.form-note {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #66687a;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Responsive === */
+@media (max-width: 920px) {
+  .main-container {
+    width: 92%;
+    height: auto;
+    flex-direction: column;
+    margin-top: 70px;
+  }
+
+  .image-section { display: none; }
+
+  .form-container {
+    padding: 36px 22px;
+  }
+
+  /* increase max width on small screens to use space, but inputs still look right */
+  .form-inner { max-width: 420px; }
+}
+
+@media (max-width: 420px) {
+  .navbar { padding: 12px 16px; }
+  .logo { font-size: 20px; }
+  .form-container { padding: 28px 16px; }
+  .form-inner { max-width: 100%; width: 100%; }
+  input, button { height: 46px; font-size: 14px; padding: 0 12px; }
+}
